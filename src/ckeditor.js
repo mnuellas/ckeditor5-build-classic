@@ -1,32 +1,44 @@
 /**
- * @license Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2014-2020, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
-
-// The editor creator to use.
-import ClassicEditorBase from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import ClassicEditorBase from '@ckeditor/ckeditor5-editor-classic/src/classiceditor.js';
 import DecoupledEditorBase from '@ckeditor/ckeditor5-editor-decoupled/src/decouplededitor';
 
-import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
-import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
-import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
-import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
-import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
-import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
-import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
-import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
-import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
-import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
-import Heading from '@ckeditor/ckeditor5-heading/src/heading';
-import Indent from '@ckeditor/ckeditor5-indent/src/indent';
-import List from '@ckeditor/ckeditor5-list/src/list';
-import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment.js';
+import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat.js';
+import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter.js';
+import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote.js';
+import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js';
+import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight.js';
+import Heading from '@ckeditor/ckeditor5-heading/src/heading.js';
+import Image from '@ckeditor/ckeditor5-image/src/image.js';
+import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption.js';
+import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize.js';
+import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle.js';
+import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar.js';
+import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload.js';
+import Indent from '@ckeditor/ckeditor5-indent/src/indent.js';
+import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js';
+import Link from '@ckeditor/ckeditor5-link/src/link.js';
+import List from '@ckeditor/ckeditor5-list/src/list.js';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
-import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
-import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight';
+import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters.js';
+import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials.js';
+import SpecialCharactersArrows from '@ckeditor/ckeditor5-special-characters/src/specialcharactersarrows.js';
+import SpecialCharactersCurrency from '@ckeditor/ckeditor5-special-characters/src/specialcharacterscurrency.js';
+import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough.js';
+import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript.js';
+import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript.js';
+import Table from '@ckeditor/ckeditor5-table/src/table.js';
+import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties';
+import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
+import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
+import Title from '@ckeditor/ckeditor5-heading/src/title.js';
 import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
-import Table from '@ckeditor/ckeditor5-table/src/table';
-import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
+import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
+import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials.js';
+import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
 
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import { toWidget, viewToModelPositionOutsideModelElement } from '@ckeditor/ckeditor5-widget/src/utils';
@@ -35,7 +47,8 @@ import Command from '@ckeditor/ckeditor5-core/src/command';
 
 import { addListToDropdown, createDropdown } from '@ckeditor/ckeditor5-ui/src/dropdown/utils';
 import Collection from '@ckeditor/ckeditor5-utils/src/collection';
-import Model from '@ckeditor/ckeditor5-ui/src/model';
+import Model from '@ckeditor/ckeditor5-ui/src/model'
+
 
 class PlaceholderFields extends Plugin {
     static get requires() {
@@ -219,7 +232,7 @@ class DecoupledEditor extends DecoupledEditorBase {}
 // Plugins to include in the build.
 const plugins = [
 	Essentials,
-	UploadAdapter,
+    Base64UploadAdapter,
 	Autoformat,
 	Bold,
 	Italic,
@@ -229,7 +242,8 @@ const plugins = [
 	Superscript,
 	BlockQuote,
 	Heading,
-	Indent,
+    Indent,
+    Link,
 	List,
 	Paragraph,
 	PasteFromOffice,
@@ -238,7 +252,12 @@ const plugins = [
 	TodoList,
 	Table,
 	TableToolbar,
-	PlaceholderFields
+	PlaceholderFields,
+	SpecialCharacters,
+	SpecialCharactersEssentials,
+	SpecialCharactersArrows,
+	SpecialCharactersCurrency,
+    Image, ImageToolbar, ImageStyle, ImageResize, ImageUpload
 ];
 ClassicEditor.builtinPlugins = plugins;
 DecoupledEditor.builtinPlugins = plugins;
@@ -303,7 +322,22 @@ const config = {
 				type: 'pen'
 			}
 		]
-	},
+    },
+    image: {
+        // You need to configure the image toolbar, too, so it uses the new style buttons.
+        toolbar: ['imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
+        contentToolbar : ['imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
+        styles: [
+            // This option is equal to a situation where no style is applied.
+            'full',
+
+            // This represents an image aligned to the left.
+            'alignLeft',
+
+            // This represents an image aligned to the right.
+            'alignRight'
+        ]
+    },
 	toolbar: {
 		items: [
 			'heading',
@@ -313,7 +347,7 @@ const config = {
 			'strikethrough',
 			'underline',
 			'subscript',
-			'superscript',
+            'superscript',
 			'|',
 			'bulletedList',
 			'numberedList',
@@ -325,16 +359,21 @@ const config = {
 			'indent',
 			'outdent',
 			'|',
-			'blockQuote',
+            'blockQuote',
+            'imageUpload',
 			'alignment',
 			'|',
 			'undo',
 			'redo',
-			'placeholder'
+            'placeholder',
+            'insertTable',
 		]
-	},
+    },
+    table: {
+        contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+    },
 	placeholderConfig: {
-		types: [ 'firstname', 'lastname', 'link_RDV', 'site', 'service_line', 'rank', 'asset_tag', 'date', 'day_of_the_week' ],
+		types: [ 'firstname', 'lastname', 'link_RDV', 'site', 'service_line', 'rank', 'asset_tag', 'date', 'day_of_the_week', 'model' ],
 		label: 'Available fields'
 	},
 	// This value must be kept in sync with the language defined in webpack.config.js.
@@ -346,3 +385,4 @@ DecoupledEditor.defaultConfig = config;
 export default {
 	ClassicEditor, DecoupledEditor
 }
+
